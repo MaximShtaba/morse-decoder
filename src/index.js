@@ -95,7 +95,7 @@ function decode(expr) {
 }
 
 
-decode(expr)
+
 module.exports = {
 	decode
 }
