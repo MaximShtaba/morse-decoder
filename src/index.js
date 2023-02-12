@@ -91,7 +91,7 @@ function decode(expr) {
 			arrayOutput.push("**********")
 		}
 	}
-	return(arrayOutput.join(""))
+	return arrayOutput.join("")
 }
 
 
