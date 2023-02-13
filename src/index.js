@@ -37,61 +37,37 @@ const MORSE_TABLE = {
 	'-----': '0',
 };
 
-
-
 function decode(expr) {
-	let morseArr = [];
-	let morsePoint = [];
-	let tenzero = [];
-	let arrayOutput = [];
-	for (let i = 0; i < expr.length; i++) {
-		morseArr.push(expr[i])
+	let arr = [];
+	let point = [];
+	let stringlength = expr.length;
+	let str = "";
+	for (let i = 0; i < stringlength / 10; i++) {
+		arr.push(expr.slice(i * 10, i * 10 + 10))
 	}
-	for (let i = 0; i < morseArr.length; i++) {
-		
-		if (morseArr[i] !== " ") {
-			for (let key in MORSE_TABLE) {
-				if (morseArr[i] === MORSE_TABLE[key]) {
-					morsePoint.push(key)
+	for (let i = 0; i < arr.length; i++) {
+		let strres = "";
+		let massArr = [];
+		if (arr[i] !== "**********") {
+			for (let k = 0; k < arr[i].length / 2; k++) {
+				if ((arr[i].slice(k * 2, k * 2 + 2)) !== "00" && (arr[i].slice(k * 2, k * 2 + 2)) === "10") {
+					massArr.push(".")
+				}
+				else if ((arr[i].slice(k * 2, k * 2 + 2)) !== "00" && (arr[i].slice(k * 2, k * 2 + 2)) === "11") {
+					massArr.push("-")
 				}
 			}
-		}
-		else if (morseArr[i] === " ") {
-			morsePoint.push("**********")
+		} else if (arr[i] === "**********") { massArr.push(" ") }
+		point.push(massArr.join(""))
+	}
+	for (let i = 0; i < point.length; i++) {
+		if (point[i] !== " ") {
+			str = str + MORSE_TABLE[point[i]]
+		} else {
+			str = str + " ";
 		}
 	}
-	for (let i = 0; i < morsePoint.length; i++) {
-		
-		if (morsePoint[i] !== "**********") {
-			let arrayI = "";
-			for (let j = 0; j < morsePoint[i].length; j++) {
-				if (morsePoint[i][j] === "-") {
-					arrayI = arrayI + "11"
-				} else if (morsePoint[i][j] === ".") {
-					arrayI = arrayI + "10"
-				}
-			}
-			tenzero.push(arrayI)
-		}
-		else if (morsePoint[i] === "**********") {
-			tenzero.push("**********")
-		}
-	}
-	for (let i = 0; i < tenzero.length; i++) {
-		let zerocount = "";
-		let strlength = 0;
-		strlength = 10 - tenzero[i].length;
-		if (tenzero[i] !== "**********") {
-			for (let j = 0; j < strlength; j++) {
-				zerocount = zerocount + "0"
-			}
-			arrayOutput[i] = zerocount + tenzero[i];
-		}
-		else if (tenzero[i] === "**********") {
-			arrayOutput.push("**********")
-		}
-	}
-	return arrayOutput.join("")
+	return str
 }
 
 
